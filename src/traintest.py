@@ -166,7 +166,9 @@ def train(audio_model, train_loader, test_loader, args):
 
             end_time = time.time()
             global_step += 1
+            
 
+        torch.save(audio_model.state_dict(), "%s/models/audio_model.%d.pth" % (exp_dir, epoch))
         print('start validation')
         stats, valid_loss = validate(audio_model, test_loader, args, epoch)
 
