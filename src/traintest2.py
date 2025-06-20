@@ -199,13 +199,13 @@ def train(audio_model, train_loader, test_loader, args):
         print("train_loss: {:.6f}".format(loss_meter.avg))
         print("valid_loss: {:.6f}".format(valid_loss))
 
-        if main_metrics == 'mAP':
-            # result[epoch-1, :] = [mAP, mAUC, average_precision, average_recall, d_prime(mAUC), loss_meter.avg, valid_loss, cum_mAP, cum_mAUC, optimizer.param_groups[0]['lr']]
-            result[epoch-1, :] = [mAP,  average_precision, average_recall, loss_meter.avg, valid_loss, cum_mAP, cum_mAUC, optimizer.param_groups[0]['lr']]
-        else:
-            result[epoch-1, :] = [acc, mAUC, average_precision, average_recall, d_prime(mAUC), loss_meter.avg, valid_loss, cum_acc, cum_mAUC, optimizer.param_groups[0]['lr']]
-        np.savetxt(exp_dir + '/result.csv', result, delimiter=',')
-        print('validation finished')
+        # if main_metrics == 'mAP':
+        #     # result[epoch-1, :] = [mAP, mAUC, average_precision, average_recall, d_prime(mAUC), loss_meter.avg, valid_loss, cum_mAP, cum_mAUC, optimizer.param_groups[0]['lr']]
+        #     result[epoch-1, :] = [mAP,  average_precision, average_recall, loss_meter.avg, valid_loss, cum_mAP, cum_mAUC, optimizer.param_groups[0]['lr']]
+        # else:
+        #     result[epoch-1, :] = [acc, mAUC, average_precision, average_recall, d_prime(mAUC), loss_meter.avg, valid_loss, cum_acc, cum_mAUC, optimizer.param_groups[0]['lr']]
+        # np.savetxt(exp_dir + '/result.csv', result, delimiter=',')
+        # print('validation finished')
 
         if mAP > best_mAP:
             best_mAP = mAP
@@ -217,9 +217,9 @@ def train(audio_model, train_loader, test_loader, args):
             if main_metrics == 'acc':
                 best_epoch = epoch
 
-        # if cum_mAP > best_cum_mAP:
-        #     best_cum_epoch = epoch
-        #     best_cum_mAP = cum_mAP
+        if cum_mAP > best_cum_mAP:
+            best_cum_epoch = epoch
+            best_cum_mAP = cum_mAP
 
         if best_epoch == epoch:
             torch.save(audio_model.state_dict(), "%s/models/best_audio_model.pth" % (exp_dir))
