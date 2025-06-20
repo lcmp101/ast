@@ -10,7 +10,7 @@ import os
 import datetime
 sys.path.append(os.path.dirname(os.path.dirname(sys.path[0])))
 sys.path.insert(1, 'C:/Users/lcmartin/Documents/doctorado/ast/src/')
-from utilities import *
+from src.utilities import *
 import time
 import torch
 from torch import nn
